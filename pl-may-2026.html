@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PL Lead Quality — April–May 2026 Findings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0F1419;
+  --bg-2: #161C24;
+  --bg-3: #1E262F;
+  --line: #2A3540;
+  --line-soft: #1F2933;
+  --ink: #E8EBEF;
+  --ink-2: #A8B2BD;
+  --ink-3: #6B7785;
+  --accent: #E07A5F;
+  --accent-soft: rgba(224, 122, 95, 0.12);
+  --accent-line: rgba(224, 122, 95, 0.35);
+  --good: #7FB069;
+  --good-soft: rgba(127, 176, 105, 0.12);
+  --bad: #C44536;
+  --bad-soft: rgba(196, 69, 54, 0.12);
+  --warn: #D4A845;
+  --warn-soft: rgba(212, 168, 69, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.005em;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(224, 122, 95, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(127, 176, 105, 0.03) 0%, transparent 50%),
+    var(--bg);
+  min-height: 100vh;
+  padding: 80px 48px 120px;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+header {
+  margin-bottom: 96px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 48px;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ink-3);
+  margin-bottom: 24px;
+}
+
+.eyebrow .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-right: 12px;
+  vertical-align: middle;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(38px, 5.5vw, 68px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  font-variation-settings: "opsz" 144;
+}
+
+h1 .accent {
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: var(--ink-2);
+  max-width: 680px;
+  line-height: 1.55;
+}
+
+.meta-row {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.meta-row span strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ===== SECTION HEADING ===== */
+section { margin-bottom: 88px; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 40px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 80;
+}
+
+.section-blurb {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--ink-3);
+  max-width: 440px;
+  text-align: right;
+}
+
+/* ===== KPI CARDS ===== */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.kpi {
+  background: var(--bg-2);
+  padding: 32px 28px;
+  position: relative;
+}
+
+.kpi .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.kpi .value {
+  font-family: 'Fraunces', serif;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 8px;
+  font-variation-settings: "opsz" 144;
+}
+
+.kpi .delta {
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--ink-3);
+}
+
+.kpi.bad .value { color: var(--bad); }
+.kpi.good .value { color: var(--good); }
+.kpi.accent .value { color: var(--accent); }
+.kpi.bad .delta { color: var(--bad); }
+.kpi.good .delta { color: var(--good); }
+
+/* ===== TIMELINE ===== */
+.timeline {
+  position: relative;
+  padding-left: 0;
+}
+
+.tl-item {
+  display: grid;
+  grid-template-columns: 140px 32px 1fr;
+  gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line-soft);
+  align-items: start;
+}
+
+.tl-item:last-child { border-bottom: none; }
+
+.tl-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-3);
+  padding-top: 4px;
+  letter-spacing: 0.05em;
+}
+
+.tl-date strong {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  color: var(--ink);
+  font-weight: 500;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.tl-marker {
+  position: relative;
+  height: 100%;
+}
+
+.tl-marker::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  bottom: -28px;
+  width: 1px;
+  background: var(--line);
+  transform: translateX(-50%);
+}
+
+.tl-item:last-child .tl-marker::before { display: none; }
+
+.tl-marker::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--line);
+  transform: translateX(-50%);
+}
+
+.tl-item.crucial .tl-marker::after {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.tl-item.recovery .tl-marker::after {
+  background: var(--good);
+  border-color: var(--good);
+  box-shadow: 0 0 0 4px var(--good-soft);
+}
+
+.tl-action {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  font-variation-settings: "opsz" 80;
+}
+
+.tl-effect {
+  font-size: 15px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  max-width: 720px;
+}
+
+.tl-effect strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.tl-stats {
+  display: flex;
+  gap: 28px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.tl-stat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.tl-stat .n {
+  color: var(--ink);
+  font-weight: 500;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.tl-stat.bad .n { color: var(--bad); }
+.tl-stat.good .n { color: var(--good); }
+.tl-stat.accent .n { color: var(--accent); }
+
+/* ===== FINDINGS GRID ===== */
+.findings {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.finding {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 28px 28px 26px;
+  position: relative;
+  border-radius: 2px;
+}
+
+.verdict {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.verdict.scale { background: var(--good-soft); color: var(--good); border: 1px solid var(--good); }
+.verdict.keep { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-line); }
+.verdict.stop { background: var(--bad-soft); color: var(--bad); border: 1px solid var(--bad); }
+.verdict.rebuild { background: var(--warn-soft); color: var(--warn); border: 1px solid var(--warn); }
+
+.finding-name {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.finding-metric {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ink-2);
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.finding-metric .num { color: var(--ink); font-weight: 500; }
+
+.finding-rationale {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+/* ===== TABLE ===== */
+.perf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.perf-table th {
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.perf-table th:last-child, .perf-table td:last-child { text-align: right; }
+.perf-table th.num, .perf-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.perf-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink-2);
+}
+
+.perf-table tr:hover td { background: rgba(255, 255, 255, 0.015); }
+
+.perf-table .campaign { color: var(--ink); font-weight: 500; }
+.perf-table .winner td { background: var(--good-soft); }
+.perf-table .winner .campaign { color: var(--good); }
+.perf-table .loser td { background: var(--bad-soft); }
+.perf-table .loser .campaign { color: var(--bad); }
+
+.tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  color: var(--ink-3);
+  letter-spacing: 0.05em;
+}
+.tag.good { color: var(--good); border-color: var(--good); }
+.tag.bad { color: var(--bad); border-color: var(--bad); }
+.tag.warn { color: var(--warn); border-color: var(--warn); }
+
+/* ===== NEXT STEPS ===== */
+.next {
+  background: var(--bg-2);
+  border: 1px solid var(--accent-line);
+  border-radius: 2px;
+  padding: 48px 48px 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.next::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent);
+}
+
+.next-head {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.next-title {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  font-variation-settings: "opsz" 144;
+  line-height: 1.1;
+}
+
+.next-title .x { color: var(--accent); font-style: italic; font-weight: 500; }
+
+.next-body {
+  font-size: 16px;
+  color: var(--ink-2);
+  max-width: 720px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.next-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.next-col h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.next-col ul {
+  list-style: none;
+}
+
+.next-col li {
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.next-col li .action {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 2px;
+  height: fit-content;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.action.scale { background: var(--good-soft); color: var(--good); }
+.action.cut { background: var(--bad-soft); color: var(--bad); }
+.action.fix { background: var(--warn-soft); color: var(--warn); }
+.action.keep { background: var(--accent-soft); color: var(--accent); }
+
+.next-col li strong { color: var(--ink); font-weight: 500; }
+
+/* ===== FOOTER ===== */
+footer {
+  margin-top: 96px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  body { padding: 48px 24px 80px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .findings, .next-grid { grid-template-columns: 1fr; }
+  .tl-item { grid-template-columns: 100px 24px 1fr; gap: 16px; }
+  .section-head { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .section-blurb { text-align: left; margin-left: 0; }
+  .next { padding: 32px 28px; }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+header, section { animation: fadeUp 0.6s ease-out backwards; }
+header { animation-delay: 0s; }
+section:nth-of-type(1) { animation-delay: 0.1s; }
+section:nth-of-type(2) { animation-delay: 0.2s; }
+section:nth-of-type(3) { animation-delay: 0.3s; }
+section:nth-of-type(4) { animation-delay: 0.4s; }
+section:nth-of-type(5) { animation-delay: 0.5s; }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div style="margin-bottom: 32px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em;">
+  <a href="index.html" style="color: #6B7785; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: color 0.15s;" onmouseover="this.style.color='#E07A5F'" onmouseout="this.style.color='#6B7785'">
+    <span style="font-family: 'Inter Tight', sans-serif;">←</span> ALL REPORTS
+  </a>
+</div>
+<header>
+  <div class="eyebrow"><span class="dot"></span>MHC Mobility Poland · SME Lead Generation</div>
+  <h1>What we learned from <span class="accent">two months</span> of paid scaling experiments.</h1>
+  <p class="subtitle">
+    April–May was a controlled push to find where additional budget could grow qualified lead volume.
+    The data is now in. Below: what we ran, what worked, what didn't, and where the June 5× budget goes.
+  </p>
+  <div class="meta-row">
+    <span>Period · <strong>Jan 1 – May 26, 2026</strong></span>
+    <span>Total leads · <strong>732</strong></span>
+    <span>Total spend · <strong>~55,400 PLN</strong></span>
+    <span>Baseline TAK% · <strong>~50%</strong></span>
+  </div>
+</header>
+
+<!-- ===== KPI CARDS ===== -->
+<section>
+  <div class="section-head">
+    <span class="section-num">01</span>
+    <h2 class="section-title">The headline</h2>
+    <p class="section-blurb">April–May at a glance. Volume scaled. Quality dropped. We know exactly why.</p>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi bad">
+      <div class="label">May TAK rate<br>vs ~50% baseline</div>
+      <div class="value">25%</div>
+      <div class="delta">↓ 25 percentage points</div>
+    </div>
+    <div class="kpi accent">
+      <div class="label">April leads<br>highest month of the year</div>
+      <div class="value">211</div>
+      <div class="delta">↑ from ~135 / month avg</div>
+    </div>
+    <div class="kpi bad">
+      <div class="label">Google Lead Forms<br>TAK rate</div>
+      <div class="value">9.7%</div>
+      <div class="delta">62 leads · 6 qualified</div>
+    </div>
+    <div class="kpi good">
+      <div class="label">Website Cost / TAK lead<br>Apr peak → May</div>
+      <div class="value">261<span style="font-size:22px;color:var(--ink-3);"> zł</span></div>
+      <div class="delta">↓ from 574 zł in April</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section>
+  <div class="section-head">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Timeline of decisions</h2>
+    <p class="section-blurb">What we did at each step, and what it caused.</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-date">2026<strong>Mar 6–12</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Broadened Meta targeting from five persona campaigns to a single Interest-based audience.</div>
+        <div class="tl-effect">
+          CPL held at ~48 PLN, same as the persona era. <strong>The new Interest-based baseline became our proven Meta channel — still our best performer today.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">2026<strong>Apr 1</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Scaled three Google experiments in parallel.</div>
+        <div class="tl-effect">
+          Performance Max with broad targeting, Search Generic budget tripled, and Google Lead Forms via Demand Gen. Assumption: broader targeting and easier signup would grow qualified volume.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item crucial">
+      <div class="tl-date">2026<strong>Apr 14</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Launched three Lookalike ad sets on Meta (1%, 1–3%, 3–10%) on top of the Interest-based baseline.</div>
+        <div class="tl-effect">
+          Assumption: lookalikes would let us scale qualified volume. Volume did grow — leads jumped to 211 in April, our highest month — but at 2–4× baseline CPL.
+        </div>
+        <div class="tl-stats">
+          <div class="tl-stat"><span class="n">211</span>April leads</div>
+          <div class="tl-stat accent"><span class="n">42%</span>April TAK rate</div>
+          <div class="tl-stat bad"><span class="n">2–4×</span>baseline CPL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">2026<strong>Apr 17</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Launched Performance Max Dynamiczna as a controlled PMax variant.</div>
+        <div class="tl-effect">
+          A more targeted alternative to the broad PMax that was already underperforming. <strong>This became our best Google performer at 66 PLN CPL.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">2026<strong>Apr 23</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Paused Lookalike 3–10% — worst CPL at 180 PLN.</div>
+        <div class="tl-effect">
+          First experiment to be cut. The widest lookalike was ~4× our baseline CPL — no path to efficiency.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item crucial">
+      <div class="tl-date">2026<strong>May 12</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Paused Lookalike 1–3% (124 PLN CPL). Launched a duplicate ad set to force-deliver the Suzuki Swift creative.</div>
+        <div class="tl-effect">
+          Two cuts and one new experiment. The Suzuki Swift creative wasn't getting impressions in the main ad set, so we duplicated it to test whether the offer itself could pull. <strong>Result: 1 lead on 517 PLN total spend. The creative doesn't resonate.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item crucial">
+      <div class="tl-date">2026<strong>May 13</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Pulled all Google broad-targeting campaigns and stopped Google Lead Forms entirely.</div>
+        <div class="tl-effect">
+          Daily Meta impressions dropped from 13k+ to ~1k within 48 hours. Google Lead Forms confirmed as the largest single source of unqualified leads — 79 leads across April–May, only ~7 qualified.
+        </div>
+        <div class="tl-stats">
+          <div class="tl-stat bad"><span class="n">9.7%</span>Google Lead Forms TAK%</div>
+          <div class="tl-stat bad"><span class="n">13k → 1k</span>impressions/day</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item recovery">
+      <div class="tl-date">2026<strong>Mid-May</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Sales worked through the April backlog. Real May TAK% confirmed at 25%.</div>
+        <div class="tl-effect">
+          Through April the volume looked productive (211 leads, our highest month). Pre-qualification, the experiments read as working — we were planning against the Jan–Apr ~50% baseline. <strong>Once the backlog cleared, the picture was unmistakable. Cuts to underperformers were already underway.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item recovery">
+      <div class="tl-date">2026<strong>May 26</strong></div>
+      <div class="tl-marker"></div>
+      <div class="tl-body">
+        <div class="tl-action">Cleanup complete. Website channel recovered. Findings locked in.</div>
+        <div class="tl-effect">
+          May total spend down to ~10k PLN. Website Cost per TAK lead dropped from <strong>574 PLN (April peak) to 261 PLN</strong>, back in the Feb–March range. Two channels validated as scale candidates; multiple experiments definitively retired.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== CHANNEL PERFORMANCE TABLE ===== -->
+<section>
+  <div class="section-head">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Channel performance</h2>
+    <p class="section-blurb">All campaigns ranked. Green = scale. Red = stop.</p>
+  </div>
+
+  <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-3);margin-bottom:14px;">Google Ads — 29,192 PLN</h3>
+  <table class="perf-table" style="margin-bottom:48px;">
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th class="num">Spend</th>
+        <th class="num">Leads</th>
+        <th class="num">CPL</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="winner">
+        <td class="campaign">Performance Max · Dynamiczna</td>
+        <td class="num">3,495 PLN</td>
+        <td class="num">53</td>
+        <td class="num">66 PLN</td>
+        <td><span class="tag good">Best Google performer</span></td>
+      </tr>
+      <tr>
+        <td class="campaign">Demand Gen · Lookalike (Lead Forms)</td>
+        <td class="num">794 PLN</td>
+        <td class="num">9</td>
+        <td class="num">88 PLN</td>
+        <td><span class="tag bad">Stopped — 9.7% TAK</span></td>
+      </tr>
+      <tr class="loser">
+        <td class="campaign">Search · Generic</td>
+        <td class="num">9,699 PLN</td>
+        <td class="num">36</td>
+        <td class="num">269 PLN</td>
+        <td><span class="tag bad">Ads rejected on policy</span></td>
+      </tr>
+      <tr class="loser">
+        <td class="campaign">Performance Max · broad</td>
+        <td class="num">9,333 PLN</td>
+        <td class="num">25</td>
+        <td class="num">379 PLN</td>
+        <td><span class="tag bad">Asset groups rejected</span></td>
+      </tr>
+      <tr>
+        <td class="campaign">Search · Long-tail B2B</td>
+        <td class="num">3,312 PLN</td>
+        <td class="num">0</td>
+        <td class="num">—</td>
+        <td><span class="tag bad">Phone clicks only</span></td>
+      </tr>
+      <tr>
+        <td class="campaign">Search · Brand</td>
+        <td class="num">1,027 PLN</td>
+        <td class="num">49</td>
+        <td class="num">—</td>
+        <td><span class="tag">Mostly call clicks</span></td>
+      </tr>
+      <tr>
+        <td class="campaign">Other paused + DSA</td>
+        <td class="num">1,532 PLN</td>
+        <td class="num">30</td>
+        <td class="num">—</td>
+        <td><span class="tag">Phone clicks</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-3);margin-bottom:14px;">Meta Ads — post-Apr 14 breakdown, 10,221 PLN</h3>
+  <table class="perf-table">
+    <thead>
+      <tr>
+        <th>Ad set</th>
+        <th class="num">Spend</th>
+        <th class="num">Leads</th>
+        <th class="num">CPL</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="winner">
+        <td class="campaign">Interest-based audience (baseline)</td>
+        <td class="num">3,717 PLN</td>
+        <td class="num">66</td>
+        <td class="num">56 PLN</td>
+        <td><span class="tag good">Proven baseline — active</span></td>
+      </tr>
+      <tr>
+        <td class="campaign">Lookalike 1%</td>
+        <td class="num">3,110 PLN</td>
+        <td class="num">28</td>
+        <td class="num">111 PLN</td>
+        <td><span class="tag warn">On watch — 2× baseline</span></td>
+      </tr>
+      <tr>
+        <td class="campaign">Lookalike 1–3%</td>
+        <td class="num">1,861 PLN</td>
+        <td class="num">15</td>
+        <td class="num">124 PLN</td>
+        <td><span class="tag bad">Paused May 12</span></td>
+      </tr>
+      <tr class="loser">
+        <td class="campaign">Lookalike 3–10%</td>
+        <td class="num">1,077 PLN</td>
+        <td class="num">6</td>
+        <td class="num">180 PLN</td>
+        <td><span class="tag bad">Paused Apr 23</span></td>
+      </tr>
+      <tr class="loser">
+        <td class="campaign">Suzuki Swift duplicate</td>
+        <td class="num">375 PLN</td>
+        <td class="num">0</td>
+        <td class="num">—</td>
+        <td><span class="tag bad">Creative didn't resonate</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===== FINDINGS ===== -->
+<section>
+  <div class="section-head">
+    <span class="section-num">04</span>
+    <h2 class="section-title">What the experiments taught us</h2>
+    <p class="section-blurb">Six concrete findings. Decisions for June already taken.</p>
+  </div>
+
+  <div class="findings">
+
+    <div class="finding">
+      <span class="verdict scale">Scale</span>
+      <div class="finding-name">Meta Interest-based baseline</div>
+      <div class="finding-metric"><span class="num">56 PLN</span> CPL · holds across the whole period</div>
+      <div class="finding-rationale">
+        The single most reliable Meta channel we've run. The Interest-based audience scales without breaking efficiency — June budget should anchor here first.
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="verdict scale">Scale</span>
+      <div class="finding-name">Google Performance Max Dynamiczna</div>
+      <div class="finding-metric"><span class="num">66 PLN</span> CPL · 53 leads on 3,495 PLN</div>
+      <div class="finding-rationale">
+        Our best Google performer by a wide margin. Currently 12% of Google spend — needs significantly more. Controlled targeting works on PMax; broad targeting does not.
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="verdict stop">Stop permanently</span>
+      <div class="finding-name">Google Lead Forms</div>
+      <div class="finding-metric"><span class="num">9.7%</span> TAK rate · 79 leads, ~7 qualified</div>
+      <div class="finding-rationale">
+        One-click signup attracts noise, not intent. Children clicking through games. Blank-name submissions. Obvious mistakes. Known pattern for B2B — confirmed for our segment.
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="verdict stop">Stop</span>
+      <div class="finding-name">Meta Lookalike audiences</div>
+      <div class="finding-metric"><span class="num">2–4×</span> baseline CPL across all three tiers</div>
+      <div class="finding-rationale">
+        Lookalikes scaled volume but at consistently worse economics. Wider lookalike = worse CPL with no quality offset. Not a path to growth for us.
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="verdict rebuild">Rebuild</span>
+      <div class="finding-name">Suzuki Swift creative</div>
+      <div class="finding-metric"><span class="num">1 lead</span> on 517 PLN across all ad sets</div>
+      <div class="finding-rationale">
+        Force-delivery via duplicate ad set didn't change the outcome — the creative itself doesn't resonate with our audience. Input for the next creative round on Swift and Polo.
+      </div>
+    </div>
+
+    <div class="finding">
+      <span class="verdict keep">Validated</span>
+      <div class="finding-name">Website / Showroom channel</div>
+      <div class="finding-metric"><span class="num">261 PLN</span> per TAK lead in May · down from 574 PLN peak</div>
+      <div class="finding-rationale">
+        Recovered to Feb–March range the moment the broad campaigns were cut. Higher-friction signup = higher-intent leads. Worth scaling alongside Meta Interest-based.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== NEXT ===== -->
+<section>
+  <div class="next">
+    <div class="next-head">Next · June planning</div>
+    <h2 class="next-title">Where the <span class="x">5×</span> budget goes.</h2>
+    <p class="next-body">
+      With the experiment phase complete, June scales the validated channels and retires the rest. Agency briefed; written allocation plan due back tomorrow.
+    </p>
+
+    <div class="next-grid">
+
+      <div class="next-col">
+        <h4>Google</h4>
+        <ul>
+          <li><span class="action scale">Scale</span><span><strong>PMax Dynamiczna</strong> — only proven Google performer. Currently 12% of Google spend; target 30–40%.</span></li>
+          <li><span class="action fix">Fix or cut</span><span><strong>Search Generic</strong> — resolve ad policy rejections or pause. 9.7k spent on rejected ads.</span></li>
+          <li><span class="action cut">Cut</span><span><strong>PMax broad</strong> — 379 PLN CPL with most asset groups rejected. Strong candidate to close.</span></li>
+          <li><span class="action keep">Keep</span><span><strong>Brand search</strong> — cheap, no scale potential, leave as is.</span></li>
+          <li><span class="action cut">Permanently off</span><span><strong>Google Lead Forms</strong> — confirmed not the right format for our segment.</span></li>
+        </ul>
+      </div>
+
+      <div class="next-col">
+        <h4>Meta</h4>
+        <ul>
+          <li><span class="action scale">Scale</span><span><strong>Interest-based baseline</strong> — proven 48–56 PLN CPL channel. Anchor of the June plan.</span></li>
+          <li><span class="action cut">Cut</span><span><strong>Lookalike 1%</strong> — at 111 PLN CPL, still 2× baseline. Stop alongside the other lookalikes.</span></li>
+          <li><span class="action fix">Rebuild creative</span><span><strong>Suzuki Swift &amp; Polo</strong> — close the duplicate ad set. New creative approach needed.</span></li>
+          <li><span class="action scale">Rebuild</span><span><strong>Persona-segmented structure</strong> — controlled re-test starting with the original personas, then refine.</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>MHC Mobility Poland · SME Lead Generation · Internal</span>
+  <span>Tamás Balog · CEE Marketing</span>
+  <span>Data through May 26, 2026</span>
+</footer>
+
+</div>
+
+<script>
+// === Shared auth gate ===
+(function() {
+  if (localStorage.getItem('mhc_auth') === 'true') return;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const gate = document.createElement('div');
+    gate.id = 'mhc-auth-gate';
+    gate.innerHTML = `
+      <style>
+        #mhc-auth-gate{position:fixed;inset:0;background:#0F1419;display:flex;align-items:center;justify-content:center;z-index:99999;flex-direction:column;gap:1.5rem;font-family:'Inter Tight',system-ui,sans-serif;}
+        #mhc-auth-gate .ag-title{font-family:'Fraunces',Georgia,serif;font-size:2.2rem;font-weight:500;color:#E8EBEF;letter-spacing:-0.02em;}
+        #mhc-auth-gate .ag-title em{color:#E07A5F;font-style:italic;}
+        #mhc-auth-gate .ag-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:#6B7785;letter-spacing:0.15em;text-transform:uppercase;}
+        #mhc-auth-gate .ag-box{background:#161C24;border:1px solid #2A3540;border-radius:4px;padding:2rem 2.25rem;display:flex;flex-direction:column;gap:1rem;min-width:320px;}
+        #mhc-auth-gate label{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:#6B7785;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;}
+        #mhc-auth-gate input{background:#0F1419;border:1px solid #2A3540;border-radius:2px;padding:11px 14px;color:#E8EBEF;font-family:inherit;font-size:0.95rem;font-weight:400;outline:none;transition:border 0.15s;letter-spacing:0.05em;}
+        #mhc-auth-gate input:focus{border-color:#E07A5F;}
+        #mhc-auth-gate button{background:#E07A5F;border:none;border-radius:2px;padding:11px;color:#0F1419;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:opacity 0.15s;}
+        #mhc-auth-gate button:hover{opacity:0.85;}
+        #mhc-auth-gate .ag-err{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:#C44536;letter-spacing:0.1em;text-transform:uppercase;text-align:center;min-height:1em;}
+      </style>
+      <div class="ag-eyebrow">MHC Mobility · Internal</div>
+      <div class="ag-title">Lead Gen <em>Reports</em></div>
+      <div class="ag-box">
+        <label for="ag-pw">Password</label>
+        <input id="ag-pw" type="password" autocomplete="current-password" placeholder="••••••••••••" />
+        <button id="ag-submit">Enter</button>
+        <div class="ag-err" id="ag-err"></div>
+      </div>
+    `;
+    document.body.appendChild(gate);
+    const input = document.getElementById('ag-pw');
+    const err = document.getElementById('ag-err');
+    const btn = document.getElementById('ag-submit');
+    setTimeout(() => input.focus(), 50);
+    function check() {
+      if (input.value === 'marketingastro') {
+        localStorage.setItem('mhc_auth', 'true');
+        gate.remove();
+      } else {
+        err.textContent = 'Incorrect password';
+        input.value = '';
+        setTimeout(() => err.textContent = '', 1800);
+      }
+    }
+    btn.addEventListener('click', check);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+  });
+})();
+</script>
+</body>
+</html>
