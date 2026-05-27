@@ -3,421 +3,392 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>April 2026 — MHC Lead Dashboard</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>MHC Mobility · Lead Gen Reports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0F1419;
+  --bg-2: #161C24;
+  --bg-3: #1E262F;
+  --line: #2A3540;
+  --line-soft: #1F2933;
+  --ink: #E8EBEF;
+  --ink-2: #A8B2BD;
+  --ink-3: #6B7785;
+  --accent: #E07A5F;
+  --accent-soft: rgba(224, 122, 95, 0.10);
+  --accent-line: rgba(224, 122, 95, 0.35);
+  --hu: #E8001C;
+  --hu-soft: rgba(232, 0, 28, 0.10);
+  --pl: #7FB069;
+  --pl-soft: rgba(127, 176, 105, 0.10);
+}
 
-  :root {
-    --bg: #f2f2f2;
-    --surface: #ffffff;
-    --surface2: #ebebeb;
-    --border: rgba(0,0,0,0.09);
-    --text: #111111;
-    --muted: #888888;
-    --red: #e8001c;
-    --red-light: rgba(232,0,28,0.07);
-    --font: 'Nunito Sans', sans-serif;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; padding: 2rem; }
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter Tight', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.005em;
+  min-height: 100vh;
+}
 
-  header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 3px solid var(--red);
-  }
+body {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(224, 122, 95, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(127, 176, 105, 0.03) 0%, transparent 50%),
+    var(--bg);
+  padding: 80px 48px 80px;
+  display: flex;
+  align-items: center;
+}
 
-  .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.02em; color: var(--text); }
-  .logo span { color: var(--red); }
-  .header-period { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; text-align: right; }
-  .header-date { font-size: 1rem; font-weight: 800; color: var(--text); text-align: right; }
+.wrap {
+  max-width: 980px;
+  width: 100%;
+  margin: 0 auto;
+}
 
-  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+/* Header */
+header {
+  margin-bottom: 80px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 40px;
+}
 
-  .kpi {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 1.2rem 1.4rem; border-left: 4px solid var(--red);
-  }
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ink-3);
+  margin-bottom: 20px;
+}
 
-  .kpi-label { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 800; margin-bottom: 0.35rem; }
-  .kpi-value { font-size: 2.2rem; font-weight: 900; line-height: 1; letter-spacing: -0.03em; color: var(--text); }
-  .kpi-sub { font-size: 0.68rem; color: var(--muted); margin-top: 0.35rem; font-weight: 600; }
+.eyebrow .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-right: 12px;
+  vertical-align: middle;
+  animation: pulse 2s ease-in-out infinite;
+}
 
-  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-  .chart-wide { grid-column: 1 / -1; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
 
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem; margin-bottom: 1rem; }
-  .card:last-child { margin-bottom: 0; }
+h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(38px, 5.5vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  font-variation-settings: "opsz" 144;
+}
 
-  .card-title { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 800; margin-bottom: 0.35rem; }
-  .card-sub { font-size: 0.7rem; color: var(--muted); margin-bottom: 1.1rem; font-weight: 600; }
-  .chart-wrap { position: relative; }
+h1 .accent {
+  color: var(--accent);
+  font-style: italic;
+  font-weight: 500;
+}
 
-  .legend { display: flex; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.68rem; color: var(--muted); font-weight: 700; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-  .legend-dash { width: 18px; height: 0; border-top: 2px dashed #e8001c; flex-shrink: 0; }
+.subtitle {
+  font-size: 17px;
+  color: var(--ink-2);
+  max-width: 580px;
+  line-height: 1.55;
+}
 
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-  thead th {
-    font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--muted); font-weight: 800; text-align: left;
-    padding: 0 0.75rem 0.75rem; border-bottom: 2px solid var(--border); white-space: nowrap;
-  }
-  thead th:not(:first-child) { text-align: right; }
-  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: var(--red-light); }
-  tbody td { padding: 0.6rem 0.75rem; color: var(--text); font-weight: 600; }
-  tbody td:not(:first-child) { text-align: right; }
+/* Reports grid */
+.reports-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ink-3);
+  margin-bottom: 24px;
+}
 
-  .pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; }
-  .pill-green { background: #e6f4ea; color: #1e7e34; }
-  .pill-amber { background: #fff3cd; color: #856404; }
-  .pill-red   { background: var(--red-light); color: var(--red); }
+.reports {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
 
-  .bar-inline { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
-  .bar-track { width: 60px; height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 2px; background: var(--red); }
+.report-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 32px 32px 28px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
 
-  @media (max-width: 900px) {
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .charts-grid { grid-template-columns: 1fr; }
-    body { padding: 1rem; }
-  }
+.report-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  transition: width 0.2s;
+}
+
+.report-card.pl::before { background: var(--accent); }
+.report-card.hu::before { background: var(--hu); }
+
+.report-card:hover {
+  border-color: var(--ink-3);
+  transform: translateY(-2px);
+}
+
+.report-card:hover::before {
+  width: 6px;
+}
+
+.report-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.country-tag {
+  padding: 3px 9px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.country-tag.pl {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+}
+
+.country-tag.hu {
+  background: var(--hu-soft);
+  color: var(--hu);
+  border: 1px solid rgba(232, 0, 28, 0.35);
+}
+
+.report-title {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  font-variation-settings: "opsz" 80;
+}
+
+.report-desc {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  margin-bottom: 28px;
+}
+
+.report-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-soft);
+}
+
+.report-card:hover .report-cta { color: var(--ink); }
+
+.report-cta .arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 14px;
+}
+
+.report-card:hover .report-cta .arrow {
+  transform: translateX(4px);
+}
+
+/* Footer */
+footer {
+  margin-top: 80px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line-soft);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.signout-btn {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--ink-3);
+  padding: 6px 12px;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.signout-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+@media (max-width: 760px) {
+  body { padding: 48px 24px; }
+  .reports { grid-template-columns: 1fr; }
+  header { margin-bottom: 56px; padding-bottom: 32px; }
+}
+
+/* fade-in */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+header, .reports-section { animation: fadeUp 0.6s ease-out backwards; }
+.reports-section { animation-delay: 0.15s; }
 </style>
 </head>
 <body>
 
-<!-- Password gate -->
-<div id="gate" style="position:fixed;inset:0;background:#f2f2f2;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:1.5rem;">
-  <div style="font-family:'Nunito Sans',sans-serif;font-size:2rem;font-weight:900;letter-spacing:-0.02em;color:#111;">MHC <span style="color:#e8001c">LeadBoard</span></div>
-  <div style="font-size:0.65rem;color:#888;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;margin-top:-1rem;">April 2026 · Hungary</div>
-  <div style="background:#fff;border:1px solid rgba(0,0,0,0.09);border-radius:12px;padding:2rem 2.5rem;display:flex;flex-direction:column;gap:1rem;min-width:300px;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
-    <label style="font-size:0.65rem;color:#888;letter-spacing:0.1em;text-transform:uppercase;font-weight:800;">Password</label>
-    <input id="pwInput" type="password" placeholder="••••••••••••"
-      style="background:#f2f2f2;border:1px solid rgba(0,0,0,0.12);border-radius:8px;padding:10px 14px;color:#111;font-family:'Nunito Sans',sans-serif;font-size:0.9rem;font-weight:700;outline:none;transition:border 0.15s;"
-      onkeydown="if(event.key==='Enter')checkPw()"
-      onfocus="this.style.borderColor='#e8001c'"
-      onblur="this.style.borderColor='rgba(0,0,0,0.12)'"
-    />
-    <button onclick="checkPw()"
-      style="background:#e8001c;border:none;border-radius:8px;padding:10px;color:#fff;font-family:'Nunito Sans',sans-serif;font-size:0.8rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:opacity 0.15s;"
-      onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">Enter</button>
-    <div id="pwError" style="font-size:0.7rem;color:#e8001c;font-weight:700;text-align:center;display:none;">Incorrect password</div>
-  </div>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow"><span class="dot"></span>MHC Mobility · Internal Reports</div>
+    <h1>Lead generation <span class="accent">intelligence</span>.</h1>
+    <p class="subtitle">
+      Internal performance reports for CEE lead generation. Updated reports added here as they're completed.
+    </p>
+  </header>
+
+  <section class="reports-section">
+    <div class="reports-label">Available reports · 2 published</div>
+
+    <div class="reports">
+
+      <a href="pl-may-2026.html" class="report-card pl">
+        <div class="report-meta">
+          <span class="country-tag pl">Poland</span>
+          <span>May 26, 2026</span>
+        </div>
+        <h2 class="report-title">PL · Lead quality diagnosis &amp; June plan</h2>
+        <p class="report-desc">
+          Two months of paid scaling experiments on Meta and Google. What worked, what didn't, and where the June 5× budget goes.
+        </p>
+        <div class="report-cta">
+          <span>Open report</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <a href="mhc-hu-april-leadgen.html" class="report-card hu">
+        <div class="report-meta">
+          <span class="country-tag hu">Hungary</span>
+          <span>April 2026</span>
+        </div>
+        <h2 class="report-title">HU · April lead generation dashboard</h2>
+        <p class="report-desc">
+          Daily lead volume, kuka rate, and per-campaign quality breakdown for the Hungarian SME market in April.
+        </p>
+        <div class="report-cta">
+          <span>Open report</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>MHC Mobility · CEE Lead Generation · Internal use only</span>
+    <button class="signout-btn" onclick="localStorage.removeItem('mhc_auth'); location.reload();">Sign out</button>
+  </footer>
+
 </div>
 
 <script>
-function checkPw() {
-  if (document.getElementById('pwInput').value === 'marketingastro') {
-    document.getElementById('gate').style.display = 'none';
-  } else {
-    const e = document.getElementById('pwError');
-    e.style.display = 'block';
-    document.getElementById('pwInput').value = '';
-    setTimeout(() => e.style.display = 'none', 2000);
-  }
-}
-</script>
+// === Shared auth gate ===
+(function() {
+  if (localStorage.getItem('mhc_auth') === 'true') return;
 
-<header>
-  <div class="logo">MHC <span>LeadBoard</span></div>
-  <div>
-    <div class="header-period">Period</div>
-    <div class="header-date">01 – 30 Apr 2026</div>
-  </div>
-</header>
-
-<div class="kpi-grid">
-  <div class="kpi"><div class="kpi-label">Total leads</div><div class="kpi-value">198</div><div class="kpi-sub">30 active days</div></div>
-  <div class="kpi"><div class="kpi-label">Avg company score</div><div class="kpi-value">3.63</div><div class="kpi-sub">0 = largest · 5 = smallest</div></div>
-  <div class="kpi"><div class="kpi-label">Kuka rate</div><div class="kpi-value" style="color:var(--red)">55%</div><div class="kpi-sub">109 of 198 leads</div></div>
-  <div class="kpi"><div class="kpi-label">0-3 leads</div><div class="kpi-value">40</div><div class="kpi-sub">META + WWW combined</div></div>
- 
-</div>
-
-<div class="card">
-  <div class="card-title">Daily lead volume — April</div>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:rgba(232,0,28,0.45)"></div>Total leads</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#333"></div>Kuka leads</div>
-    <div class="legend-item"><div class="legend-dash"></div>Campaign launch</div>
-  </div>
-  <div class="chart-wrap" style="height:210px">
-    <canvas id="timelineChart" role="img" aria-label="Daily lead volume April 2026">Daily leads April 1–30.</canvas>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-title">Daily kuka % — April</div>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:var(--red);border-radius:50%"></div>Kuka %</div>
-    <div class="legend-item"><div class="legend-dash"></div>Campaign launch</div>
-  </div>
-  <div class="chart-wrap" style="height:150px">
-    <canvas id="kukaLineChart" role="img" aria-label="Daily kuka percentage April 2026">Daily kuka % April 1–30.</canvas>
-  </div>
-</div>
-
-<div class="charts-grid">
-  <div class="card" style="margin-bottom:0">
-    <div class="card-title">Leads by campaign</div>
-    <div class="chart-wrap" style="height:400px">
-      <canvas id="campaignBar" role="img" aria-label="Lead count by campaign">Campaign lead counts.</canvas>
-    </div>
-  </div>
-  <div class="card" style="margin-bottom:0">
-    <div class="card-title">Kuka % by campaign</div>
-    <div class="chart-wrap" style="height:400px">
-      <canvas id="kukaBar" role="img" aria-label="Kuka % by campaign">Kuka rates per campaign.</canvas>
-    </div>
-  </div>
-</div>
-
-<div style="margin-bottom:1rem"></div>
-
-<div class="card">
-  <div class="card-title">Campaign quality map — avg score vs kuka %</div>
-  <div class="card-sub">Lower score = larger companies · Lower kuka % = better quality · Best campaigns: bottom-left</div>
-  <div class="chart-wrap" style="height:320px">
-    <canvas id="scatterChart" role="img" aria-label="Avg score vs kuka %">Quality map.</canvas>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-title">Campaign breakdown</div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Campaign</th><th>Total</th><th>Avg score</th><th>Kuka</th><th>Kuka %</th><th>Volume</th></tr></thead>
-      <tbody id="tableBody"></tbody>
-    </table>
-  </div>
-</div>
-
-<script>
-const CAMPAIGNS = [
-  {k:'BMW iX3',              t:49, avg:3.27, ku:16},
-  {k:'Renault Master',       t:28, avg:3.43, ku:14},
-  {k:'Toyota Proace Max',    t:21, avg:3.67, ku:9},
-  {k:'KIA K4',               t:17, avg:3.80, ku:7},
-  {k:'CHERY Tiggo 8',        t:16, avg:4.20, ku:11},
-  {k:'Új autók galéria',     t:15, avg:4.43, ku:8},
-  {k:'(no campaign)',        t:9,  avg:2.75, ku:5},
-  {k:'Toyota Yaris Cross',   t:7,  avg:5.00, ku:5},
-  {k:'TESLA Model 3',        t:6,  avg:3.33, ku:3},
-  {k:'Toyota Corolla Cross', t:5,  avg:4.50, ku:2},
-  {k:'Tesla Model Y',        t:3,  avg:4.00, ku:2},
-  {k:'VW Passat',            t:3,  avg:4.00, ku:2},
-  {k:'Toyota Camry',         t:3,  avg:3.00, ku:1},
-  {k:'Omoda 9',              t:3,  avg:3.00, ku:1},
-  {k:'BYD Sealion 7',        t:3,  avg:4.00, ku:2},
-  {k:'Mercedes-Benz CLA',    t:2,  avg:null, ku:2},
-  {k:'Omoda 5',              t:2,  avg:null, ku:2},
-  {k:'Teherflotta LP',       t:1,  avg:0.00, ku:0},
-  {k:'Hűtős teherflotta LP', t:1,  avg:2.00, ku:0},
-  {k:'eBringa flotta LP',    t:1,  avg:4.00, ku:0},
-];
-
-const DAILY = [
-  {d:'Apr 01',t:5,ku:3},{d:'Apr 02',t:3,ku:1},{d:'Apr 03',t:7,ku:2},
-  {d:'Apr 04',t:5,ku:3},{d:'Apr 05',t:6,ku:4},{d:'Apr 06',t:4,ku:1},
-  {d:'Apr 07',t:6,ku:2},{d:'Apr 08',t:6,ku:0},{d:'Apr 09',t:3,ku:2},
-  {d:'Apr 10',t:5,ku:1},{d:'Apr 11',t:7,ku:5},{d:'Apr 12',t:2,ku:1},
-  {d:'Apr 13',t:5,ku:3},{d:'Apr 14',t:8,ku:4},{d:'Apr 15',t:13,ku:3},
-  {d:'Apr 16',t:6,ku:2},{d:'Apr 17',t:11,ku:4},{d:'Apr 18',t:5,ku:5},
-  {d:'Apr 19',t:7,ku:3},{d:'Apr 20',t:9,ku:7},{d:'Apr 21',t:8,ku:7},
-  {d:'Apr 22',t:5,ku:3},{d:'Apr 23',t:4,ku:4},{d:'Apr 24',t:8,ku:4},
-  {d:'Apr 25',t:8,ku:5},{d:'Apr 26',t:7,ku:2},{d:'Apr 27',t:11,ku:4},
-  {d:'Apr 28',t:10,ku:5},{d:'Apr 29',t:11,ku:5},{d:'Apr 30',t:3,ku:2},
-];
-
-// Campaign launch wave indices (0-based April day index)
-// Wave 1: 20260213 — Feb 13, running from day 0
-// Wave 2: 20260309 — Mar 9, running from day 0
-// Wave 3: 20260417 — Apr 17 = index 16
-const LAUNCHES = [
-  { idx: 0,  label: 'Wave 1+2\n(Feb & Mar)' },
-  { idx: 16, label: 'Wave 3\n(Apr 17)' },
-];
-
-const RED   = '#e8001c';
-const DARK  = '#333333';
-const GRID  = 'rgba(0,0,0,0.06)';
-const MUTED = '#aaaaaa';
-
-Chart.defaults.color = '#888';
-Chart.defaults.font.family = "'Nunito Sans', sans-serif";
-Chart.defaults.font.size = 11;
-Chart.defaults.font.weight = '600';
-
-// Shared launch-line plugin factory
-function makeLaunchPlugin(id, showLabel) {
-  return {
-    id,
-    afterDraw(chart) {
-      const ctx = chart.ctx;
-      const xAxis = chart.scales.x;
-      const yAxis = chart.scales.y;
-      if (!xAxis || !yAxis) return;
-      LAUNCHES.forEach(({ idx, label }) => {
-        const x = xAxis.getPixelForValue(idx);
-        ctx.save();
-        ctx.strokeStyle = RED;
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([4, 3]);
-        ctx.beginPath();
-        ctx.moveTo(x, yAxis.top);
-        ctx.lineTo(x, yAxis.bottom);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        if (showLabel) {
-          ctx.fillStyle = RED;
-          ctx.font = '700 9px "Nunito Sans"';
-          ctx.textAlign = 'left';
-          label.split('\n').forEach((line, i) => {
-            ctx.fillText(line, x + 4, yAxis.top + 12 + i * 11);
-          });
-        }
-        ctx.restore();
-      });
+  document.addEventListener('DOMContentLoaded', function() {
+    const gate = document.createElement('div');
+    gate.id = 'mhc-auth-gate';
+    gate.innerHTML = `
+      <style>
+        #mhc-auth-gate{position:fixed;inset:0;background:#0F1419;display:flex;align-items:center;justify-content:center;z-index:99999;flex-direction:column;gap:1.5rem;font-family:'Inter Tight',system-ui,sans-serif;}
+        #mhc-auth-gate .ag-title{font-family:'Fraunces',Georgia,serif;font-size:2.2rem;font-weight:500;color:#E8EBEF;letter-spacing:-0.02em;}
+        #mhc-auth-gate .ag-title em{color:#E07A5F;font-style:italic;}
+        #mhc-auth-gate .ag-eyebrow{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;color:#6B7785;letter-spacing:0.15em;text-transform:uppercase;}
+        #mhc-auth-gate .ag-box{background:#161C24;border:1px solid #2A3540;border-radius:4px;padding:2rem 2.25rem;display:flex;flex-direction:column;gap:1rem;min-width:320px;}
+        #mhc-auth-gate label{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:#6B7785;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;}
+        #mhc-auth-gate input{background:#0F1419;border:1px solid #2A3540;border-radius:2px;padding:11px 14px;color:#E8EBEF;font-family:inherit;font-size:0.95rem;font-weight:400;outline:none;transition:border 0.15s;letter-spacing:0.05em;}
+        #mhc-auth-gate input:focus{border-color:#E07A5F;}
+        #mhc-auth-gate button{background:#E07A5F;border:none;border-radius:2px;padding:11px;color:#0F1419;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:opacity 0.15s;}
+        #mhc-auth-gate button:hover{opacity:0.85;}
+        #mhc-auth-gate .ag-err{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;color:#C44536;letter-spacing:0.1em;text-transform:uppercase;text-align:center;min-height:1em;}
+      </style>
+      <div class="ag-eyebrow">MHC Mobility · Internal</div>
+      <div class="ag-title">Lead Gen <em>Reports</em></div>
+      <div class="ag-box">
+        <label for="ag-pw">Password</label>
+        <input id="ag-pw" type="password" autocomplete="current-password" placeholder="••••••••••••" />
+        <button id="ag-submit">Enter</button>
+        <div class="ag-err" id="ag-err"></div>
+      </div>
+    `;
+    document.body.appendChild(gate);
+    const input = document.getElementById('ag-pw');
+    const err = document.getElementById('ag-err');
+    const btn = document.getElementById('ag-submit');
+    setTimeout(() => input.focus(), 50);
+    function check() {
+      if (input.value === 'marketingastro') {
+        localStorage.setItem('mhc_auth', 'true');
+        gate.remove();
+      } else {
+        err.textContent = 'Incorrect password';
+        input.value = '';
+        setTimeout(() => err.textContent = '', 1800);
+      }
     }
-  };
-}
-
-// ---- Daily volume bar ----
-new Chart(document.getElementById('timelineChart'), {
-  type: 'bar',
-  plugins: [makeLaunchPlugin('launchVol', true)],
-  data: {
-    labels: DAILY.map((_, i) => i),
-    datasets: [
-      { label:'Total', data: DAILY.map(d=>d.t), backgroundColor:'rgba(232,0,28,0.18)', borderColor:RED, borderWidth:1.5, borderRadius:3 },
-      { label:'Kuka',  data: DAILY.map(d=>d.ku), backgroundColor:'rgba(51,51,51,0.45)', borderColor:DARK, borderWidth:1, borderRadius:3 },
-    ]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{ display:false } },
-    scales:{
-      x:{ grid:{color:GRID}, ticks:{ maxRotation:45, autoSkip:false, font:{size:9}, callback:(v)=>DAILY[v]?.d??'' } },
-      y:{ grid:{color:GRID}, beginAtZero:true, ticks:{stepSize:2} }
-    }
-  }
-});
-
-// ---- Daily kuka % line ----
-new Chart(document.getElementById('kukaLineChart'), {
-  type: 'line',
-  plugins: [makeLaunchPlugin('launchKuka', false)],
-  data: {
-    labels: DAILY.map((_, i) => i),
-    datasets: [{
-      label: 'Kuka %',
-      data: DAILY.map(d => Math.round(d.ku / d.t * 100)),
-      borderColor: RED,
-      borderWidth: 2,
-      pointBackgroundColor: DAILY.map(d => {
-        const p = d.ku / d.t;
-        return p >= 0.7 ? RED : p >= 0.45 ? '#c05000' : '#1e7e34';
-      }),
-      pointRadius: 4,
-      pointHoverRadius: 6,
-      fill: true,
-      backgroundColor: 'rgba(232,0,28,0.06)',
-      tension: 0.35,
-    }]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{ display:false },
-      tooltip:{ callbacks:{ label: ctx => ` ${ctx.raw}% kuka` } }
-    },
-    scales:{
-      x:{ grid:{color:GRID}, ticks:{ maxRotation:45, autoSkip:false, font:{size:9}, callback:(v)=>DAILY[v]?.d??'' } },
-      y:{ grid:{color:GRID}, beginAtZero:true, max:110, ticks:{ callback:v=>v+'%', stepSize:25 } }
-    }
-  }
-});
-
-// Color helpers
-const barBg = c => { const p=c.ku/c.t; return p>=0.7?'rgba(232,0,28,0.72)':p>=0.45?'rgba(232,0,28,0.35)':'rgba(232,0,28,0.15)'; };
-const barBd = c => { const p=c.ku/c.t; return p>=0.7?RED:p>=0.45?'#c05000':'#aaa'; };
-
-// ---- Campaign bar ----
-const sorted = [...CAMPAIGNS].sort((a,b)=>b.t-a.t);
-new Chart(document.getElementById('campaignBar'), {
-  type:'bar',
-  data:{ labels:sorted.map(c=>c.k), datasets:[{ data:sorted.map(c=>c.t), backgroundColor:sorted.map(barBg), borderColor:sorted.map(barBd), borderWidth:1, borderRadius:3 }] },
-  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-    scales:{ x:{grid:{color:GRID},beginAtZero:true}, y:{grid:{color:'transparent'},ticks:{font:{size:10}}} } }
-});
-
-// ---- Kuka % bar ----
-const sortedKuka = [...CAMPAIGNS].sort((a,b)=>(b.ku/b.t)-(a.ku/a.t));
-new Chart(document.getElementById('kukaBar'), {
-  type:'bar',
-  data:{ labels:sortedKuka.map(c=>c.k), datasets:[{ data:sortedKuka.map(c=>Math.round(c.ku/c.t*100)), backgroundColor:sortedKuka.map(barBg), borderColor:sortedKuka.map(barBd), borderWidth:1, borderRadius:3 }] },
-  options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-    scales:{ x:{grid:{color:GRID},beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}, y:{grid:{color:'transparent'},ticks:{font:{size:10}}} } }
-});
-
-// ---- Scatter ----
-const scatterData = CAMPAIGNS.filter(c=>c.avg!==null).map(c=>({
-  x:c.avg, y:Math.round(c.ku/c.t*100), r:Math.max(7,c.t*1.4), label:c.k, t:c.t
-}));
-
-const scatterChart = new Chart(document.getElementById('scatterChart'), {
-  type:'bubble',
-  data:{ datasets:[{
-    data:scatterData,
-    backgroundColor: scatterData.map(d => d.x<=3.5&&d.y<=40?'rgba(30,126,52,0.55)':d.x>=4.2||d.y>=65?'rgba(232,0,28,0.6)':'rgba(180,100,0,0.45)'),
-    borderColor:'transparent',
-  }]},
-  options:{
-    responsive:true, maintainAspectRatio:false, layout:{padding:24},
-    plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:ctx=>` ${ctx.raw.label} — score:${ctx.raw.x.toFixed(2)}, kuka:${ctx.raw.y}%, leads:${ctx.raw.t}` } } },
-    scales:{
-      x:{ grid:{color:GRID}, min:0, max:5.5, title:{display:true,text:'avg score (0 = largest company)',color:MUTED,font:{size:10}}, ticks:{stepSize:0.5} },
-      y:{ grid:{color:GRID}, min:-5, max:110, title:{display:true,text:'kuka %',color:MUTED,font:{size:10}}, ticks:{callback:v=>v+'%'} }
-    }
-  }
-});
-
-const origDraw = scatterChart.draw.bind(scatterChart);
-scatterChart.draw = function() {
-  origDraw();
-  const ctx = scatterChart.ctx;
-  scatterChart.data.datasets[0].data.forEach((d,i) => {
-    const meta = scatterChart.getDatasetMeta(0);
-    if (!meta.data[i]) return;
-    const {x,y} = meta.data[i].getCenterPoint();
-    ctx.save();
-    ctx.fillStyle='#333'; ctx.font='700 9px "Nunito Sans"'; ctx.textAlign='center';
-    ctx.fillText(d.label.length>15?d.label.slice(0,14)+'…':d.label, x, y-meta.data[i].options.radius-4);
-    ctx.restore();
+    btn.addEventListener('click', check);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
   });
-};
-scatterChart.draw();
-
-// ---- Table ----
-const maxT = Math.max(...CAMPAIGNS.map(c=>c.t));
-const tbody = document.getElementById('tableBody');
-[...CAMPAIGNS].sort((a,b)=>b.t-a.t).forEach(c=>{
-  const kp=Math.round(c.ku/c.t*100);
-  const kcls=kp>=70?'pill-red':kp>=45?'pill-amber':'pill-green';
-  const scoreCls=c.avg===null?'':c.avg<=3.2?'pill-green':c.avg<=4.0?'pill-amber':'pill-red';
-  const bw=Math.round(c.t/maxT*100);
-  tbody.innerHTML+=`<tr>
-    <td>${c.k}</td><td>${c.t}</td>
-    <td>${c.avg!==null?`<span class="pill ${scoreCls}">${c.avg.toFixed(2)}</span>`:'—'}</td>
-    <td>${c.ku}</td>
-    <td><span class="pill ${kcls}">${kp}%</span></td>
-    <td><div class="bar-inline"><div class="bar-track"><div class="bar-fill" style="width:${bw}%"></div></div><span style="font-size:.7rem;color:var(--muted);min-width:24px">${c.t}</span></div></td>
-  </tr>`;
-});
+})();
 </script>
+
 </body>
 </html>
